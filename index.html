@@ -69,6 +69,8 @@
       <pre><code id="userInfo"></code></pre>
     </div>
 
+    <button onclick="greeting()"></button>
+
   </div>
 
 </body>
@@ -89,6 +91,13 @@
       textarea.innerHTML = response.statusText;
     }
   }
+
+  function greeting() {
+    fetch('/api/greeting')
+      .then(response => response.text())
+      .then(data => console.log(data));
+  }
 </script>
+
 
 </html>
