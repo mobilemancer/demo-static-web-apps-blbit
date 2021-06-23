@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Static Web App Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&family=Raleway&display=swap" rel="stylesheet">
+  <!-- Milligram CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+</head>
+
+<style>
+  body {
+    font-family: 'Raleway', sans-serif;
+    margin: 2rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  .row>a {
+    margin-left: 2rem;
+  }
+</style>
+
+<body>
+  <h1>Azure Static Web Apps Demo</h1>
+
+  <br>
+
+  <div class="container">
+
+    <div class="row">
+
+      <div class="column column-offset-20">
+        <a class="button button-outline" href="/.auth/login/twitter">
+          Login with Twitter
+        </a>
+      </div>
+      <div class="column">
+        <a class="button button-outline" href="/.auth/login/facebook">
+          Login with Facebook
+        </a>
+      </div>
+      <div class="column">
+        <a class="button button-outline" href="/.auth/logout">
+          Logout
+        </a>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <button onclick="getUserInfo()"> Get user info </button>
+      <a class="button button-outline" href="/admin/admin.html">
+        Admin
+      </a>
+    </div>
+
+    <div class="row">
+      <pre><code id="userInfo"></code></pre>
+    </div>
+
+  </div>
+
+</body>
+
+
+<script>
+  async function getUserInfo() {
+    var textarea = document.getElementById("userInfo");
+    textarea.removeAttribute("hidden");
+
+    const response = await fetch('/.auth/me');
+    if (response.ok) {
+      const payload = await response.json();
+      const { clientPrincipal } = payload;
+      console.log(clientPrincipal);
+      textarea.innerHTML = JSON.stringify(clientPrincipal, null, 4);
+    } else {
+      textarea.innerHTML = response.statusText;
+    }
+  }
+</script>
+
+</html>
